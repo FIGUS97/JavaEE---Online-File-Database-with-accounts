@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <style>
+        .content {
+            max-width: 50%;
+            margin: auto;
+        }
+    </style>
+    <h:head>
+        <title>Dane Studentów</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{dane_bean.onload}" />
+        </f:metadata>
+        <div class="valign-wrapper" id="strona-rejestracji">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s10 offset-s1">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <h:form class="welcome-logout">
+                                            <div class="col s12 index-redirect right-align">
+                                                <h:commandLink value="Wyloguj" action="#{dane_bean.wyloguj()}" styleClass="btn btn-medium" />
+                                            </div>
+                                            <div class="col s12 index-redirect center">
+                                                <span class="blue-text text-darken-2">Zalogowany #{dane_bean.user.login}!</span><br/>
+                                                <span class="blue-text text-darken-2">Witamy!</span>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s6 left-align">
+                                            <h:form id="plikUpload" enctype="multipart/form-data">
+                                                <h:inputFile id="file" value="#{dane_bean.file}"/>
+                                                <h:commandButton value="Upload"
+                                                                 action="#{dane_bean.upload}"/>
+                                            </h:form>
+                                        </div>
+                                        <div class="col s6 right-align">
+                                            <h:form id="form3" enctype="multipart/form-data">
+                                                <h:panelGroup id="dodawanieFolderu2">
+                                                    <h:commandLink value="Dodaj folder" 
+                                                                   action="#{dane_bean.przyciskDodajFolder}"/>
+                                                    <h:inputText value="#{dane_bean.nazwaFolderuEdycja}" rendered="#{dane_bean.dodawanieFolderu eq true}"></h:inputText>
+                                                    <h:commandLink value="Dodaj" rendered="#{dane_bean.dodawanieFolderu eq true}"
+                                                                   action="#{dane_bean.dodajFolder}"/>
+                                                </h:panelGroup>
+                                            </h:form>
+                                        </div>
+                                        <div class="col s12 left-align">
+                                            <h:form class="foldery">
+                                                #{dane_bean.message}
+                                                <br/><br/>
+                                                <h:commandLink value="W gore" rendered="#{dane_bean.obecnyFolder.nadkatalog != null}"
+                                                               action="#{dane_bean.folderWGore}" styleClass="btn btn-medium"/>
+                                                <span class="blue-text text-darken-2 left-align">Jesteś w folderze: #{dane_bean.nazwaObecnegoFolderu}</span><br/>
+                                                <h:outputLabel class="blue-text text-darken-2 left-align" value="Modyfikacja danej:" rendered="#{dane_bean.edycja eq true}"></h:outputLabel><br/>
+                                                <h:outputLabel class="blue-text text-darken-2 left-align" value="Przenieś do folderu o nazwie: " rendered="#{dane_bean.edycja eq true}"></h:outputLabel>
+                                                <h:inputText value="#{dane_bean.folderDoPrzeniesienia}" rendered="#{dane_bean.edycja eq true}"></h:inputText>
+                                                <h:outputLabel class="blue-text text-darken-2 left-align" value="Nowa nazwa pliku: " rendered="#{dane_bean.edycja eq true}"></h:outputLabel>
+                                                <h:inputText value="#{dane_bean.nowaNazwaPliku}" rendered="#{dane_bean.edycja eq true}"></h:inputText>
+                                                <h:commandLink value="Zapisz zmiany" rendered="#{dane_bean.edycja eq true}"
+                                                               action="#{dane_bean.modyfikujZapisz}" styleClass="btn btn-medium"/>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s10 offset-s1">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h:form enctype="multipart/form-data">
+                                        <div class="row">
+                                            <h:dataTable value="#{dane_bean.pobierzFoldery()}" var="f" border="1">
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        Nazwa folderu
+                                                    </f:facet>
+                                                    <h:commandLink action="#{dane_bean.zmienFolder(f)}" >#{f.nazwa}</h:commandLink>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </div>
+                                        <div class="row">
+                                            <h:dataTable value="#{dane_bean.pobierzDane()}" var="d" border="1">
+
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        ID
+                                                    </f:facet>
+                                                    #{d.id}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        Nazwa obiektu
+                                                    </f:facet>
+                                                    #{d.nazwa}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        Własność
+                                                    </f:facet>
+                                                    #{d.idWlasciciela}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        Data dodania
+                                                    </f:facet>
+                                                    #{d.dataDodania}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header" >
+                                                        Link
+                                                    </f:facet>
+                                                    <h:commandLink value="Pobierz "
+                                                                   action="#{dane_bean.pobierz(d)}"/>
+                                                    <h:commandLink value="Usun " rendered="#{dane_bean.user.czyadmin eq true}"
+                                                                   action="#{dane_bean.usun(d)}"/>
+                                                    <h:commandLink value="Modyfikuj " rendered="#{dane_bean.user.czyadmin eq true}"
+                                                                   action="#{dane_bean.modyfikuj(d)}"/>
+                                                    <br/>
+                                                    <h:panelGroup layout="block" rendered="#{dane_bean.czyWlasciciel(d) eq true}">
+                                                    <ul id="dropdown" class="dropdown-content">
+                                                        <li><a href="#{d.widocznosc}">#{d.widocznosc}</a></li>
+                                                        <li><a href="#{dane_bean.resztaOpcjiWidocznosci(d, 1)}">#{dane_bean.resztaOpcjiWidocznosci(d, 1)}</a></li>
+                                                        <li><a href="#{dane_bean.resztaOpcjiWidocznosci(d, 2)}">#{dane_bean.resztaOpcjiWidocznosci(d, 2)}</a></li>
+                                                    </ul>
+                                                    <a class="btn dropdown-trigger" href="#{d.widocznosc}" data-target="dropdown">#{d.widocznosc}</a>
+                                                    </h:panelGroup>
+                                                    <!--<h:selectOneMenu value="#{dane_bean.wybranaWidocznosc}" rendered="#{dane_bean.czyWlasciciel(d) eq true}">
+                                                        <f:selectItem itemLabel="#{d.widocznosc}" itemValue="#{d.widocznosc}" />
+                                                        <f:selectItem itemLabel="#{dane_bean.resztaOpcjiWidocznosci(d, 1)}" itemValue="#{dane_bean.resztaOpcjiWidocznosci(d, 1)}" />
+                                                        <f:selectItem itemLabel="#{dane_bean.resztaOpcjiWidocznosci(d, 2)}" itemValue="#{dane_bean.resztaOpcjiWidocznosci(d, 2)}" />
+                                                    </h:selectOneMenu>-->
+                                                    <h:commandLink value="Zmien widocznosc" rendered="#{dane_bean.czyWlasciciel(d) eq true}"
+                                                                   action="#{dane_bean.updateWidocznosc(d)}"/>
+                                                </h:column>
+
+                                            </h:dataTable>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

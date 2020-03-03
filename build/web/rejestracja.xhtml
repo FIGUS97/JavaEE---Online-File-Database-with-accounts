@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Rejestracja</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+        <div class="valign-wrapper" id="strona-rejestracji">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s6 offset-s3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h:form class="index-redirect">
+                                        <div class="col s12 index-redirect right-align">
+                                            <h:commandLink value="Powrót" action="index.xhtml" styleClass="btn btn-medium" />
+                                        </div>
+                                    </h:form>
+                                    <div class="left-align">
+                                        <h:form class="login-form">
+                                            <p:growl id="growl" showDetail="true" sticky="true">
+                                                <p:autoUpdate />
+                                            </p:growl>
+                                            <div class="row">
+                                                <div class="col s12 input-field right">
+                                                    <span class="blue-text text-darken-2">Rejestracja nowego użytkownika</span>
+                                                </div>
+                                            </div>
+                                            <div class="row"> 
+                                                <div class="col s12 input-field">    
+                                                    <h:inputText id="login" value="#{rejestracja_bean.login}"/>
+                                                    <h:outputLabel for="login" value="Login" />
+                                                </div>
+                                                <div class="col s12 input-field">    
+                                                    <h:inputSecret id="haslo" value="#{rejestracja_bean.haslo}"/>
+                                                    <h:outputLabel for="haslo" value="Haslo" />
+                                                </div>
+                                                <div class="col s12 input-field">    
+                                                    <h:inputSecret id="hasloPowtornie" value="#{rejestracja_bean.hasloPowtornie}"/>
+                                                    <h:outputLabel for="hasloPowtornie" value="Haslo powtórnie" />
+                                                </div>
+                                                <div class="col s3 input-field">    
+                                                    <h:commandLink value="Zarejestruj" action="#{rejestracja_bean.rejestruj()}" styleClass="btn btn-large" />
+                                                </div>
+                                                <div class="col s12 input-field">
+                                                    <span class="blue-text text-darken-2">#{rejestracja_bean.message}</span>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            $(document).on("ready", function () {
+                $('#strona-logowania').css({'height': window.innerHeight + 'px'});
+            });
+        </script>
+
+    </h:body>
+</html>
+

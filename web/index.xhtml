@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Logowanie</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    </h:head>
+    <h:body styleClass="cyan lighten-5">
+        <div class="valign-wrapper" id="strona-logowania">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s6 offset-s3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="blue-text text-darken-2">Witamy w serwisie danych studentów!</span>
+                                    <div class="left-align">
+                                        <h:form class="login-form">
+                                            <p:growl id="growl" showDetail="true" sticky="true">
+                                                <p:autoUpdate />
+                                            </p:growl>
+                                            <div class="row"> 
+                                                <div class="col s12 input-field">    
+                                                    <h:inputText id="login" value="#{logowanie_bean.login}"/>
+                                                    <h:outputLabel for="login" value="Login" />
+                                                </div>
+                                                <div class="col s12 input-field">    
+                                                    <h:inputSecret id="haslo" value="#{logowanie_bean.haslo}"/>
+                                                    <h:outputLabel for="haslo" value="Haslo" />
+                                                </div>
+                                                <div class="col s3 input-field">    
+                                                    <h:commandLink value="Zaloguj" action="#{logowanie_bean.loguj(1)}" styleClass="btn btn-medium" />
+                                                </div>
+                                                <div class="col s3 input-field left">    
+                                                    <h:commandLink value="Gość" action="#{logowanie_bean.loguj(2)}" styleClass="btn btn-medium" />
+                                                </div>
+                                                <div class="col s3.5 input-field right">    
+                                                    <h:commandLink value="Rejestruj" action="rejestracja.xhtml" styleClass="btn btn-medium" />
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            $(document).on("ready", function () {
+                $('#strona-logowania').css({'height': window.innerHeight + 'px'});
+            });
+        </script>
+
+    </h:body>
+</html>
+
